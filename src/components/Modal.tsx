@@ -29,7 +29,7 @@ const Modal = (props: IProps) => {
             <div className="w-full flex justify-end">
               <Icon
                 icon="fontisto:close"
-                className="text-xl flex items-end justify-end"
+                className="text-xl flex items-end justify-end text-gray-800"
                 onClick={() => close()}
               />
             </div>
