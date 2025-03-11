@@ -35,7 +35,7 @@ const Input = (props: IProps) => {
         type={type}
         className={`
           ${classes} w-full px-4 h-10 bg-gray-50 border 
-          placeholder-gray-700 text-sm
+          placeholder-gray-700 text-sm text-gray-800
           focus:outline-1 ${error !== '' ? 'border-red-500' : 'border-gray-300'}
         `}
         placeholder={placeholder}
@@ -43,7 +43,7 @@ const Input = (props: IProps) => {
         onChange={({ target: { value } }) => handler(value)}
       />
       {icon && icon !== '' && (
-        <Icon icon={icon} className="absolute right-4 top-3 text-xl" />
+        <Icon icon={icon} className="absolute right-4 top-3 text-xl text-gray-800" />
       )}
       {error !== '' && <span className="text-xs text-red-500">{error}</span>}
     </div>

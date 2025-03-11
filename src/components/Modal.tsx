@@ -37,7 +37,7 @@ const Modal = (props: IProps) => {
               <div className="bg-[#37b6ff] flex w-full justify-between gap-10 items-center px-4 py-2">
                 <div className="flex flex-col -gap-1">
                   <span className="font-bold text-white text-xs 2xl:text-base xl:text-sm">Kartu Tanda Anggota</span>
-                  <span className="font-bold text-xs 2xl:text-base xl:text-sm">Himpunan Nelayan Seluruh Indonesia</span>
+                  <span className="text-black font-bold text-xs 2xl:text-base xl:text-sm">Himpunan Nelayan Seluruh Indonesia</span>
                 </div>
                 {data?.logo && data?.logo !== '' && (
                   <Image src={data.logo} alt="logo" width={50} height={50} />
@@ -46,12 +46,12 @@ const Modal = (props: IProps) => {
               <div className="px-4 bg-[#d5effe] p-2"></div>
               <div className="bg-white py-6 px-2 flex justify-between gap-4 items-center">
                 <div className="flex flex-col text-sm">
-                  <span className="text-xs 2xl:text-base xl:text-sm"><b>Nama:</b> {data?.name}</span>
-                  <span className="text-xs 2xl:text-base xl:text-sm"><b>Nomor Anggota:</b> {data?.identity}</span>
+                  <span className="text-gray-800 text-xs 2xl:text-base xl:text-sm"><b>Nama:</b> {data?.name}</span>
+                  <span className="text-gray-800 text-xs 2xl:text-base xl:text-sm"><b>Nomor Anggota:</b> {data?.identity}</span>
                 </div>
                 <div className="flex flex-col items-center gap-1">
                   <Icon className="text-2xl 2xl:text-6xl xl:text-4xl text-gray-600" icon="wpf:qrcode" />
-                  <span className="text-xs font-bold">{data?.identity}</span>
+                  <span className="text-gray-800 text-xs font-bold">{data?.identity}</span>
                 </div>
               </div>
             </div>

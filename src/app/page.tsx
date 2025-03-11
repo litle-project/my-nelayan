@@ -65,7 +65,7 @@ const Page = () => {
             {
               user ? (
                 <div className="rounded-lg shadow-md border-2 border-gray-100 flex flex-col p-4 gap-2">
-                  <span>Hasil Untuk: <b>{user?.identity}</b></span>
+                  <span className="text-gray-800">Hasil Untuk: <b>{user?.identity}</b></span>
                   <Icon icon="prime:id-card" className="text-6xl text-center mx-auto text-gray-400" />
                   <span
                     role="button"
