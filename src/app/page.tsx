@@ -42,8 +42,8 @@ const Page = () => {
 
   return (
     <Layout>
-      <div className="flex justify-center w-full bg-white">
-        <div className="lg:w-1/2 w-full h-full min-h-lvh relative">
+      <div className="flex justify-center w-full bg-black">
+        <div className="lg:w-1/2 w-full h-full min-h-lvh relative bg-white">
           <Modal
             data={user}
             status={modal.status}
@@ -51,7 +51,7 @@ const Page = () => {
           />
         
           <Navbar title="MyNelayan" />
-          <div className="absolute top-20 w-full px-20">
+          <div className="absolute top-20 w-full xl:px-20 px-2">
             <Input
               type="number"
               eventKey={(param: string) => findUser(param)}
@@ -61,7 +61,7 @@ const Page = () => {
               icon="material-symbols:search"
             />
           </div>
-          <div className="px-32 mt-20">
+          <div className="xl:px-32 px-5 mt-20">
             {
               user ? (
                 <div className="rounded-lg shadow-md border-2 border-gray-100 flex flex-col p-4 gap-2">
