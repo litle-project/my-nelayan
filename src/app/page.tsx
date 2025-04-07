@@ -1,83 +1,45 @@
 'use client'
 
 import Layout from "@/app/layout"
-import Empty from "@/components/Empty"
-import Input from "@/components/Input"
-import Navbar from "@/components/Navbar"
-import Modal from "@/components/Modal"
 import { Icon } from "@iconify/react"
-import { useState } from 'react'
-
-interface IUser {
-  name: string,
-  identity: string,
-  logo?: string
-}
+import Button from "@/components/Button"
+import { useRouter } from "next/navigation"
 
 const Page = () => {
-  const envMode = process.env.NEXT_PUBLIC_NODE_ENV
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
-  const [firstRender, setFirstRender] = useState(false)
-  const [user, setUser] = useState<IUser | null>(null)
-  const [modal, setModal] = useState({
-    status: false,
-    content: ''
-  })
-
-  const findUser = (keyword = '') => {
-    if (keyword.length > 4) {
-      setUser({
-        name: 'Ilham',
-        identity: keyword,
-        logo: envMode === 'production'
-          ? `${basePath}/images/hnsi.png`
-          : '/images/hnsi.png'
-      })
-    }
-    
-    else setUser(null)
-
-    if (!firstRender) setFirstRender(true)
-  }
-
+  const router = useRouter()
+  
   return (
     <Layout>
       <div className="flex justify-center w-full bg-black">
         <div className="lg:w-1/2 w-full h-full min-h-lvh relative bg-white">
-          <Modal
-            data={user}
-            status={modal.status}
-            close={() => setModal({ status: false, content: '' })}
-          />
-        
-          <Navbar title="MyNelayan" />
-          <div className="absolute top-20 w-full xl:px-20 px-2">
-            <Input
-              type="number"
-              eventKey={(param: string) => findUser(param)}
-              handler={() => {}}
-              placeholder="Masukan No. KTP"
-              classes="rounded-full shadow-md [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-              icon="material-symbols:search"
-            />
-          </div>
-          <div className="xl:px-32 px-5 mt-20">
-            {
-              user ? (
-                <div className="rounded-lg shadow-md border-2 border-gray-100 flex flex-col p-4 gap-2">
-                  <span className="text-gray-800">Hasil Untuk: <b>{user?.identity}</b></span>
-                  <Icon icon="prime:id-card" className="text-6xl text-center mx-auto text-gray-400" />
-                  <span
-                    role="button"
-                    onClick={() => setModal({ status: true, content: 'id-card' })}
-                    className="text-blue-400 hover:underline text-sm text-right cursor-pointer"
-                  >
-                    Tampilkan Kartu Anggota
-                  </span>
+          <div className="relative">
+            <div className="bg-[#003766] rounded-br-5xl rounded-bl-7xl flex items-center justify-center pt-28 pb-64">
+              <div className="flex flex-col items-center">
+                <h1 className="text-white font-bold text-4xl">Halo</h1>
+                <h2 className="text-white font-medium text-3xl">Selamat Datang!</h2>
+              </div>
+            </div>
+            <div className="absolute flex mt-5 items-center justify-center top-64 w-full">
+              <div className="flex flex-col items-center gap-10 shadow-xl rounded-xl bg-white py-20 px-5 md:w-1/2 w-sm">
+                <span className="text-3xl font-extrabold">Login</span>
+                <div className="flex flex-col gap-5 w-full">
+                  <div className="relative">
+                    <input type="text" className="rounded-full border-2 border-gray-400 w-full py-2 px-4" placeholder="Email" />
+                    <Icon icon="iconamoon:email-bold" className="absolute right-4 top-3 text-xl text-gray-500" />
+                  </div>
+                  <div className="relative">
+                    <input type="password" className="rounded-full border-2 border-gray-400 w-full py-2 px-4" placeholder="Password" />
+                    <Icon icon="material-symbols:lock-outline" className="absolute right-4 top-3 text-xl text-gray-500" />
+                  </div>
                 </div>
-              ) 
-              : firstRender && <Empty />
-            }
+                <Button
+                  loading={{ status: false, message: '' }}
+                  classes="bg-black rounded-full"
+                  label="Login Sekarang"
+                  handler={() => router.push('/dashboard')}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
