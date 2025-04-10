@@ -104,7 +104,7 @@ const Page = () => {
                       </div>
                     </div>
                   </div>
-                  <Image src={certified} alt="certified" width={0} height={0} style={{ width: "100%", height: "auto" }} />
+                  <Image src={certified} alt="certified" width={1000} height={500} style={{ width: "100%", height: "auto" }} />
                 </div>
               </div>
             </div>
