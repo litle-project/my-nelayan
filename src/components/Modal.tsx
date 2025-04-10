@@ -46,7 +46,7 @@ const Modal = (props: IProps) => {
       <div
         className={`w-full h-auto min-h-lvh absolute bg-black/40 z-40 ${status ? '' : 'hidden'}`}
       />
-      <div className={`absolute top-1/3 h-auto w-full z-50 ${status ? '' : 'hidden'}`}>
+      <div className={`absolute top-20 h-auto w-full z-50 ${status ? '' : 'hidden'}`}>
         <div className="w-full flex justify-center items-center">
           <div className="bg-white p-4 flex flex-col gap-2 rounded-lg">
             <div className="w-full flex justify-end">
