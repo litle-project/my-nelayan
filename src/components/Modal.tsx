@@ -27,7 +27,7 @@ const Modal = (props: IProps) => {
   const envMode = process.env.NEXT_PUBLIC_NODE_ENV
   
   const generateCode = () => {
-    QRCode.toDataURL(`${baseURL}/profile/${data?.identity || ''}`)
+    QRCode.toDataURL(`${baseURL}/profile?identity=${data?.identity || ''}`)
       .then((url: string) => setQrCode(url))
       .catch((err: unknown) => console.error(err));
   }

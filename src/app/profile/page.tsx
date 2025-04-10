@@ -38,7 +38,7 @@ const Page = () => {
       identity: code || ''
     }))
 
-    QRCode.toDataURL(`${baseURL}/profile/${code || ''}`)
+    QRCode.toDataURL(`${baseURL}/profile?identity=${code || ''}`)
       .then((url: string) => setQrCode(url))
       .catch((err: unknown) => console.error(err));
   }
