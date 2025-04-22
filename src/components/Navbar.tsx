@@ -20,6 +20,10 @@ const Navbar = (props: IProps) => {
   const { title = "" } = props;
 
   const [showMenu, setShowMenu] = useState(false);
+  const [account, setAccount] = useState({
+    name: "",
+    email: "",
+  });
 
   useEffect(() => {
     if (envMode === "production") setLogo(`${basePath}/images/bg-login.png`);
@@ -30,6 +34,14 @@ const Navbar = (props: IProps) => {
     localStorage.removeItem("email");
     router.push("/");
   };
+
+  useEffect(() => {
+    const name = localStorage.getItem("name");
+    const email = localStorage.getItem("email");
+
+    if (name && name !== "" && email && email !== "")
+      setAccount({ email, name });
+  }, []);
 
   return (
     <div
@@ -62,10 +74,8 @@ const Navbar = (props: IProps) => {
             className={`flex gap-5 ${isMobile && "hidden"}`}
           >
             <div className="flex flex-col items-end text-white">
-              <span className="text-xl">{localStorage.getItem("name")}</span>
-              <span className="text-base font-medium">
-                {localStorage.getItem("email")}
-              </span>
+              <span className="text-xl">{account.name}</span>
+              <span className="text-base font-medium">{account.email}</span>
             </div>
             <div className="bg-white p-4 rounded-full">
               <Icon icon="mdi:user" className="text-2xl text-[#003766]" />
