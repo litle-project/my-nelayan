@@ -10,11 +10,14 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import ScreenDetector from "@/utilities/screen-detector";
 import QRCode from "qrcode";
+import Http from "@/utilities/http";
+import moment from "moment";
 
 interface IUser {
   name: string;
   identity: string;
   logo?: string;
+  date: string;
 }
 
 const Page = () => {
@@ -37,12 +40,18 @@ const Page = () => {
       .catch((err: unknown) => console.error(err));
   };
 
-  const findUser = (keyword = "") => {
-    if (keyword.length > 4) {
-      generateCode(keyword);
+  const findUser = async (keyword = "") => {
+    const response = await Http.get("api/get/user", {
+      nik: keyword,
+    });
+
+    if (response?.data) {
+      const { identity, name, join_date } = response.data;
+      generateCode(identity);
       setUser({
-        name: "Ilham",
-        identity: keyword,
+        identity,
+        name,
+        date: moment(join_date).format("DD MMM, YYYY"),
         logo:
           envMode === "production"
             ? `${basePath}/images/hnsi.png`
@@ -127,7 +136,7 @@ const Page = () => {
               <div
                 role="button"
                 onClick={() => setModal({ status: true, content: "id-card" })}
-                className="p-4 bg-[#003766] rounded-xl flex justify-between"
+                className="p-4 bg-[#2a4ea2] rounded-xl flex justify-between"
               >
                 <Image
                   src={qrCode}
@@ -140,7 +149,7 @@ const Page = () => {
                 <div className="grid grid-cols-4 text-white gap-5 items-center w-[80%]">
                   <div className="flex flex-col text-center">
                     <span>Nama</span>
-                    <span className="text-2xl font-bold">Susanti</span>
+                    <span className="text-2xl font-bold">{user?.name}</span>
                   </div>
                   <div className="flex flex-col text-center">
                     <span>No Registrasi</span>
@@ -148,7 +157,7 @@ const Page = () => {
                   </div>
                   <div className="flex flex-col text-center">
                     <span>Tanggal Bergabung</span>
-                    <span className="text-2xl font-bold">20 Jun, 2019</span>
+                    <span className="text-2xl font-bold">{user?.date}</span>
                   </div>
                   <div className="flex flex-col text-center">
                     <span>Verified Member</span>

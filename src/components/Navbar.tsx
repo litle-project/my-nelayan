@@ -25,11 +25,17 @@ const Navbar = (props: IProps) => {
     if (envMode === "production") setLogo(`${basePath}/images/bg-login.png`);
   }, [envMode]);
 
+  const logout = () => {
+    localStorage.removeItem("name");
+    localStorage.removeItem("email");
+    router.push("/");
+  };
+
   return (
     <div
       className={`rounded-b-xl ${
         isMobile ? "py-10 px-7" : "py-5 px-10"
-      } bg-[#003766] text-white font-bold text-xl`}
+      } bg-[#2a4ea2] text-white font-bold text-xl`}
     >
       <div className="flex justify-between">
         <div className="flex gap-5 items-center">
@@ -56,8 +62,10 @@ const Navbar = (props: IProps) => {
             className={`flex gap-5 ${isMobile && "hidden"}`}
           >
             <div className="flex flex-col items-end text-white">
-              <span className="text-xl">Susanti</span>
-              <span className="text-base font-medium">susanti@mail.com</span>
+              <span className="text-xl">{localStorage.getItem("name")}</span>
+              <span className="text-base font-medium">
+                {localStorage.getItem("email")}
+              </span>
             </div>
             <div className="bg-white p-4 rounded-full">
               <Icon icon="mdi:user" className="text-2xl text-[#003766]" />
@@ -68,7 +76,7 @@ const Navbar = (props: IProps) => {
           >
             <button
               className="bg-white cursor-pointer hover:bg-gray-100 text-gray-600 text-sm px-3 py-1 rounded-lg shadow-xl"
-              onClick={() => router.push("/")}
+              onClick={() => logout()}
             >
               Logout
             </button>

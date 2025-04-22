@@ -7,12 +7,16 @@ import Image from "next/image";
 import Button from "@/components/Button";
 import { useRouter } from "next/navigation";
 import ScreenDetector from "@/utilities/screen-detector";
+import Http from "@/utilities/http";
+import { useDispatch } from "react-redux";
+import { setMessage } from "@/services/redux/snakebar";
 
 const Page = () => {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const envMode = process.env.NEXT_PUBLIC_NODE_ENV;
 
   const router = useRouter();
+  const dispatch = useDispatch();
   const { isMobile } = ScreenDetector();
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({
@@ -32,6 +36,26 @@ const Page = () => {
       });
     }
   }, [envMode]);
+
+  const submit = async () => {
+    const response = await Http.post("web/session/authenticate", {
+      jsonrpc: "2.0",
+      params: {
+        db: process.env.NEXT_PUBLIC_DB,
+        login: form.email,
+        password: form.password,
+      },
+    });
+
+    if (response?.result) {
+      localStorage.setItem("email", response?.result?.username);
+      localStorage.setItem("name", response?.result?.name);
+
+      return router.push("/dashboard");
+    } else {
+      dispatch(setMessage("Email atau password tidak valid"));
+    }
+  };
 
   return (
     <>
@@ -77,9 +101,9 @@ const Page = () => {
                 </div>
                 <Button
                   loading={{ status: false, message: "" }}
-                  classes="bg-[#003766] rounded-full"
+                  classes="bg-[#2a4ea2] rounded-full"
                   label="Login Sekarang"
-                  handler={() => router.push("/dashboard")}
+                  handler={() => submit()}
                 />
               </div>
             </div>
@@ -101,13 +125,14 @@ const Page = () => {
             style={{ width: "100%", height: "100%" }}
           />
           <div className="absolute left-5 top-64 flex flex-col">
-            <div className="2xl:w-[80%] w-[75%] object-contain">
+            <div className="2xl:w-[80%] w-[75%] object-fill">
               <Image
                 alt="illustration"
                 src={image.illustration}
-                width={500}
-                height={500}
-                style={{ width: "100%", height: "auto" }}
+                width={100}
+                height={100}
+                className="w-full h-full object-contain"
+                style={{ width: "100%", height: "100%" }}
               />
             </div>
             <span className="2xl:text-4xl xl:text-3xl text-2xl text-white/80 font-black">
@@ -156,6 +181,9 @@ const Page = () => {
                   type={showPassword ? "text" : "password"}
                   className="border-b-2 border-gray-300 placeholder-gray-400 py-1 w-full outline-none focus:border-[#003766]"
                   placeholder="Masukan Password"
+                  onChange={({ target: { value } }) =>
+                    setForm({ ...form, password: value })
+                  }
                 />
                 <button
                   className="absolute right-0 top-0"
@@ -177,9 +205,9 @@ const Page = () => {
             </div>
             <Button
               loading={{ status: false, message: "" }}
-              classes="bg-[#003766] rounded-full font-bold"
+              classes="bg-[#2a4ea2] rounded-full font-bold"
               label="Login Sekarang"
-              handler={() => router.push("/dashboard")}
+              handler={() => submit()}
             />
           </div>
         </div>
