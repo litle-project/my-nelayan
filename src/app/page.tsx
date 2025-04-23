@@ -7,7 +7,6 @@ import Image from "next/image";
 import Button from "@/components/Button";
 import { useRouter } from "next/navigation";
 import ScreenDetector from "@/utilities/screen-detector";
-import Http from "@/utilities/http";
 import { useDispatch } from "react-redux";
 import { setMessage } from "@/services/redux/snakebar";
 

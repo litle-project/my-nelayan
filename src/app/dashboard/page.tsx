@@ -10,7 +10,6 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import ScreenDetector from "@/utilities/screen-detector";
 import QRCode from "qrcode";
-import Http from "@/utilities/http";
 import moment from "moment";
 
 interface IUser {
