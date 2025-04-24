@@ -85,7 +85,7 @@ const Page = () => {
               type="number"
               eventKey={(param: string) => findUser(param)}
               handler={() => {}}
-              placeholder="Masukan No. KTP"
+              placeholder="Cari berdasarkan NIK..."
               classes="rounded-full shadow-md [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
               icon="material-symbols:search"
             />
@@ -114,19 +114,23 @@ const Page = () => {
           </div>
         </div>
       </div>
-      <div className={`${!isMobile ? "" : "hidden"} flex flex-col gap-10`}>
+      <div
+        className={`${
+          !isMobile ? "" : "hidden"
+        } flex flex-col gap-10 bg-white min-h-lvh`}
+      >
         <Modal
           data={user}
           status={modal.status}
           close={() => setModal({ status: false, content: "" })}
         />
         <Navbar title="Himpunan Nelayan Seluruh Indonesia" />
-        <div className="2xl:px-96 xl:px-72 px-24 flex flex-col gap-10">
+        <div className="2xl:px-96 xl:px-72 px-24 flex flex-col gap-10 bg-white">
           <Input
             type="number"
             eventKey={(param: string) => findUser(param)}
             handler={() => {}}
-            placeholder="Masukan No. KTP"
+            placeholder="Cari berdasarkan NIK..."
             classes="rounded-xl [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none "
             icon="material-symbols:search"
           />

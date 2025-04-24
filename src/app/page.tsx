@@ -19,8 +19,8 @@ const Page = () => {
   const { isMobile } = ScreenDetector();
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({
-    email: "",
-    password: "",
+    email: "chameleon@user.com",
+    password: "Af/WZ$U7]jgUv;UvrE",
   });
   const [image, setImage] = useState({
     bg: "images/bg-login.png",
@@ -53,7 +53,7 @@ const Page = () => {
       localStorage.setItem("cookies", data.result.cookies);
       router.push("/dashboard");
     } else {
-      dispatch(setMessage("Email atau password tidak valid"));
+      dispatch(setMessage("Email atau kata sandi salah. Silakan coba lagi."));
     }
   };
 
@@ -62,7 +62,7 @@ const Page = () => {
       <div className={`${isMobile ? "" : "hidden"} flex justify-center w-full`}>
         <div className="lg:w-1/2 w-full h-full min-h-lvh relative bg-white">
           <div className="relative">
-            <div className="bg-[#003766] rounded-br-5xl rounded-bl-7xl flex items-center justify-center pt-28 pb-64">
+            <div className="bg-[#2a4ea2] rounded-br-5xl rounded-bl-7xl flex items-center justify-center pt-28 pb-64">
               <div className="flex flex-col items-center">
                 <h1 className="text-white font-bold text-4xl">Halo</h1>
                 <h2 className="text-white font-medium text-3xl">
@@ -72,7 +72,7 @@ const Page = () => {
             </div>
             <div className="absolute flex mt-5 items-center justify-center top-64 w-full">
               <div className="flex flex-col items-center gap-10 shadow-xl rounded-xl bg-white py-20 px-5 md:w-1/2 w-sm">
-                <span className="text-3xl font-extrabold text-[#003766]">
+                <span className="text-3xl font-extrabold text-[#2a4ea2]">
                   Login
                 </span>
                 <div className="flex flex-col gap-5 w-full">
@@ -113,7 +113,7 @@ const Page = () => {
       <div
         className={`${
           !isMobile ? "" : "hidden"
-        } flex w-full fixed justify-between`}
+        } flex w-full justify-between bg-white min-h-lvh `}
       >
         <div className="relative w-[50%]">
           <Image
@@ -142,14 +142,14 @@ const Page = () => {
         </div>
         <div className="flex justify-center items-center flex-1 pb-24">
           <div className="flex flex-col gap-10 items-center">
-            <span className="text-5xl text-blue-950 font-[1000] uppercase mb-10 tracking-wide">
+            <span className="text-5xl text-[#2a4ea2] font-[1000] uppercase mb-10 tracking-wide">
               Login
             </span>
-            <div className="flex flex-col w-[400px] group focus-within:text-[#003766] gap-2">
+            <div className="flex flex-col w-[400px] group focus-within:text-[#2a4ea2] gap-2">
               <label
                 className={`font-bold text-xl ${
-                  form.email !== "" ? "text-[#003766]" : "text-gray-400"
-                } group-focus-within:text-[#003766]`}
+                  form.email !== "" ? "text-[#2a4ea2]" : "text-gray-400"
+                } group-focus-within:text-[#2a4ea2]`}
               >
                 Email
               </label>
@@ -158,8 +158,10 @@ const Page = () => {
                   type="text"
                   placeholder="Masukan Email"
                   className={`border-b-2 ${
-                    form.email !== "" ? "border-[#003766]" : "border-gray-300"
-                  } placeholder-gray-400 py-1 w-full outline-none focus:border-[#003766]`}
+                    form.email !== ""
+                      ? "border-[#2a4ea2] text-[#2a4ea2]"
+                      : "border-gray-300"
+                  } placeholder-gray-400 py-1 w-full outline-none focus:border-[#2a4ea2]`}
                   onChange={({ target: { value } }) =>
                     setForm({ ...form, email: value })
                   }
@@ -167,19 +169,27 @@ const Page = () => {
                 <Icon
                   icon="quill:mail"
                   className={`absolute right-0 top-0 text-xl ${
-                    form.email !== "" ? "text-[#003766]" : "text-gray-400"
-                  } group-focus-within:text-[#003766]`}
+                    form.email !== "" ? "text-[#2a4ea2]" : "text-gray-400"
+                  } group-focus-within:text-[#2a4ea2]`}
                 />
               </div>
             </div>
-            <div className="flex flex-col w-[400px] group focus-within:text-[#003766] gap-2">
-              <label className="font-bold text-xl text-gray-400 group-focus-within:text-[#003766]">
+            <div className="flex flex-col w-[400px] group focus-within:text-[#2a4ea2] gap-2">
+              <label
+                className={`font-bold text-xl group-focus-within:text-[#2a4ea2] ${
+                  form.password !== "" ? "text-[#2a4ea2]" : "text-gray-400"
+                }`}
+              >
                 Password
               </label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
-                  className="border-b-2 border-gray-300 placeholder-gray-400 py-1 w-full outline-none focus:border-[#003766]"
+                  className={`border-b-2 border-gray-300 placeholder-gray-400 py-1 w-full outline-none focus:border-[#2a4ea2] ${
+                    form.password !== ""
+                      ? "border-[#2a4ea2] text-[#2a4ea2]"
+                      : "border-gray-300"
+                  }`}
                   placeholder="Masukan Password"
                   onChange={({ target: { value } }) =>
                     setForm({ ...form, password: value })
@@ -192,12 +202,20 @@ const Page = () => {
                   {!showPassword ? (
                     <Icon
                       icon="basil:eye-closed-outline"
-                      className="text-xl text-gray-400 group-focus-within:text-[#003766]"
+                      className={`text-xl group-focus-within:text-[#2a4ea2] ${
+                        form.password !== ""
+                          ? "text-[#2a4ea2]"
+                          : "text-gray-400"
+                      }`}
                     />
                   ) : (
                     <Icon
                       icon="iconamoon:eye-light"
-                      className="text-xl text-gray-400 group-focus-within:text-[#003766]"
+                      className={`text-xl group-focus-within:text-[#2a4ea2] ${
+                        form.password !== ""
+                          ? "text-[#2a4ea2]"
+                          : "text-gray-400"
+                      }`}
                     />
                   )}
                 </button>

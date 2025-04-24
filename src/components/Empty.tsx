@@ -13,7 +13,7 @@ const Empty = () => {
   const [image, setImage] = useState("/images/not-found.png");
 
   useEffect(() => {
-    if (envMode === "production") setImage(`${basePath}/images/bg-login.png`);
+    if (envMode === "production") setImage(`${basePath}/images/not-found.png`);
   }, [envMode]);
 
   return (
