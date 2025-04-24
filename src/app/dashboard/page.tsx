@@ -7,10 +7,11 @@ import Modal from "@/components/Modal";
 import Default from "@/components/Default";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ScreenDetector from "@/utilities/screen-detector";
 import QRCode from "qrcode";
 import moment from "moment";
+import { useRouter } from "next/navigation";
 
 interface IUser {
   name: string;
@@ -24,6 +25,7 @@ const Page = () => {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "";
 
+  const router = useRouter();
   const { isMobile } = ScreenDetector();
   const [qrCode, setQrCode] = useState("");
   const [firstRender, setFirstRender] = useState(false);
@@ -45,7 +47,7 @@ const Page = () => {
       method: "GET",
     });
     const data = await response.json();
-    console.log(data)
+
     if (data?.data) {
       const { identity, name, join_date } = data.data;
       generateCode(identity);
@@ -64,6 +66,11 @@ const Page = () => {
 
     if (!firstRender) setFirstRender(true);
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("cookies");
+    if (!token) router.push("/");
+  }, []);
 
   return (
     <>

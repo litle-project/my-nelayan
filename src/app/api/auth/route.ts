@@ -2,8 +2,9 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
+    const baseURL = process.env.NEXT_PUBLIC_API_URL
     const body = await req.json(); // assuming JSON body
-    const apiUrl = `https://hnsi.antarasystems.com/web/session/authenticate`;
+    const apiUrl = `${baseURL}/web/session/authenticate`;
 
     const response = await fetch(apiUrl, {
       method: "POST",
@@ -13,7 +14,7 @@ export async function POST(req: Request) {
       body: JSON.stringify({
         jsonrpc: "2.0",
         params: {
-          db: process.env.ODOO_DB,
+          db: process.env.NEXT_PUBLIC_DB,
           login: body.email,
           password: body.password,
         },
@@ -21,11 +22,10 @@ export async function POST(req: Request) {
     });
 
     const res = await response.json();
-    if (res.error) {
-      throw new Error("Something went wrong.");
-    }
+    if (res.error) throw new Error("Something went wrong.");
 
     const data = response.headers.getSetCookie();
+    
     return NextResponse.json({
       result: {
         cookies: data[0],

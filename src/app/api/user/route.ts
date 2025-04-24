@@ -3,10 +3,11 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
+    const baseURL = process.env.NEXT_PUBLIC_API_URL
     const searchParams = req.nextUrl.searchParams;
     const nik = searchParams.get("nik");
     const cookie = searchParams.get("cookie");
-    const apiUrl = `https://hnsi.antarasystems.com/api/get/user?nik=${nik}`;
+    const apiUrl = `${baseURL}/api/get/user?nik=${nik}`;
     const response = await fetch(apiUrl, {
       headers: {
         Cookie: `${cookie}`,

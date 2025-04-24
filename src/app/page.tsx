@@ -19,8 +19,8 @@ const Page = () => {
   const { isMobile } = ScreenDetector();
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({
-    email: "chameleon@user.com",
-    password: "Af/WZ$U7]jgUv;UvrE",
+    email: "",
+    password: "",
   });
   const [image, setImage] = useState({
     bg: "images/bg-login.png",
@@ -47,7 +47,7 @@ const Page = () => {
     });
 
     const data = await response.json();
-    console.log(data);
+
     if (data?.result) {
       localStorage.setItem("email", data.result.username);
       localStorage.setItem("cookies", data.result.cookies);

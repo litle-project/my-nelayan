@@ -51,12 +51,12 @@ const Page = () => {
     if (!slug) router.back();
   }, [envMode, slug]);
 
-  useEffect(
-    () => () => {
-      setQrCode("");
-    },
-    []
-  );
+  useEffect(() => () => setQrCode(""), []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("cookies");
+    if (!token) router.push("/");
+  }, []);
 
   return (
     <div className="flex justify-center w-full bg-black">
