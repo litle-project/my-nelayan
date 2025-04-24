@@ -10,7 +10,6 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import ScreenDetector from "@/utilities/screen-detector";
 import QRCode from "qrcode";
-import Http from "@/utilities/http";
 import moment from "moment";
 
 interface IUser {
@@ -41,12 +40,14 @@ const Page = () => {
   };
 
   const findUser = async (keyword = "") => {
-    const response = await Http.get("api/get/user", {
-      nik: keyword,
+    const cookie = localStorage.getItem("cookies");
+    const response = await fetch(`/api/user?nik=${keyword}&cookie=${cookie}`, {
+      method: "GET",
     });
-
-    if (response?.data) {
-      const { identity, name, join_date } = response.data;
+    const data = await response.json();
+    console.log(data)
+    if (data?.data) {
+      const { identity, name, join_date } = data.data;
       generateCode(identity);
       setUser({
         identity,

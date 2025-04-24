@@ -7,7 +7,6 @@ import Image from "next/image";
 import Button from "@/components/Button";
 import { useRouter } from "next/navigation";
 import ScreenDetector from "@/utilities/screen-detector";
-import Http from "@/utilities/http";
 import { useDispatch } from "react-redux";
 import { setMessage } from "@/services/redux/snakebar";
 
@@ -38,20 +37,21 @@ const Page = () => {
   }, [envMode]);
 
   const submit = async () => {
-    const response = await Http.post("web/session/authenticate", {
-      jsonrpc: "2.0",
-      params: {
-        db: process.env.NEXT_PUBLIC_DB,
-        login: form.email,
+    const response = await fetch("/api/auth", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: form.email,
         password: form.password,
-      },
+      }),
     });
 
-    if (response?.result) {
-      localStorage.setItem("email", response?.result?.username);
-      localStorage.setItem("name", response?.result?.name);
-
-      return router.push("/dashboard");
+    const data = await response.json();
+    console.log(data);
+    if (data?.result) {
+      localStorage.setItem("email", data.result.username);
+      localStorage.setItem("cookies", data.result.cookies);
+      router.push("/dashboard");
     } else {
       dispatch(setMessage("Email atau password tidak valid"));
     }

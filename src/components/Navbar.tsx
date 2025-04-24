@@ -30,7 +30,7 @@ const Navbar = (props: IProps) => {
   }, [envMode]);
 
   const logout = () => {
-    localStorage.removeItem("name");
+    localStorage.removeItem("cookies");
     localStorage.removeItem("email");
     router.push("/");
   };

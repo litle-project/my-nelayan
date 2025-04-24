@@ -3,8 +3,7 @@
 
 import { redirect } from "next/navigation";
 
-const baseURL: string =
-  process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+const baseURL: string = process.env.NEXT_PUBLIC_API_URL || "";
 
 type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE";
 type RequestBody = Record<string, any> | FormData | null;
@@ -15,7 +14,7 @@ class Http {
     path: string,
     body: RequestBody = null
   ): Promise<T | void> {
-    const url = new URL(`${baseURL}/${path}`);
+    const url = new URL(`${baseURL}${path}`);
 
     // Add query params for GET
     if (method === "GET" && body && !(body instanceof FormData)) {
