@@ -26,7 +26,7 @@ const Navbar = (props: IProps) => {
   });
 
   useEffect(() => {
-    if (envMode === "production") setLogo(`${basePath}/images/bg-login.png`);
+    if (envMode === "production") setLogo(`${basePath}/images/hnsi.png`);
   }, [envMode]);
 
   const logout = () => {
@@ -78,7 +78,7 @@ const Navbar = (props: IProps) => {
               <span className="text-base font-medium">{account.email}</span>
             </div>
             <div className="bg-white p-4 rounded-full">
-              <Icon icon="mdi:user" className="text-2xl text-[#003766]" />
+              <Icon icon="mdi:user" className="text-2xl text-[#2a4ea2]" />
             </div>
           </button>
           <div

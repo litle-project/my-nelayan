@@ -13,6 +13,7 @@ class Http {
   async request<T = any>(
     method: HTTPMethod,
     path: string,
+
     body: RequestBody = null
   ): Promise<T | void> {
     const url = new URL(`${baseURL}/${path}`);
@@ -53,6 +54,10 @@ class Http {
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData?.message || "Something went wrong");
+      }
+
+      for (const [key, value] of response.headers.entries()) {
+        console.log(`${key}: ${value}`);
       }
 
       return await response.json();
