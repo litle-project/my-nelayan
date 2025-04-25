@@ -53,10 +53,10 @@ const Page = () => {
 
   useEffect(() => () => setQrCode(""), []);
 
-  useEffect(() => {
-    const token = localStorage.getItem("cookies");
-    if (!token) router.push("/");
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("cookies");
+  //   if (!token) router.push("/");
+  // }, []);
 
   return (
     <div className="flex justify-center w-full bg-black">
