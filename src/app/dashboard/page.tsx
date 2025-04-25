@@ -101,11 +101,21 @@ const Page = () => {
               icon={!loading ? "material-symbols:search" : "tdesign:loading"}
               iconClass={loading ? "animate-spin" : "cursor-pointer"}
               iconHandler={(param: string) => findUser(param)}
+              styles={{
+                background: "#ffffff",
+                border: "1px solid #d1d5db",
+                borderRadius: "9999px",
+                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                color: "#4B5563",
+              }}
             />
           </div>
           <div className="xl:px-32 px-5 mt-20">
             {user ? (
-              <div className="rounded-lg shadow-md border-2 border-gray-100 flex flex-col p-4 gap-2">
+              <div
+                className="rounded-lg shadow-md border-2 border-gray-100 flex flex-col p-4 gap-2"
+                style={{ border: "1px solid #d1d5db" }}
+              >
                 <span className="text-gray-800">
                   Hasil Untuk: <b>{user?.identity}</b>
                 </span>

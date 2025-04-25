@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 
@@ -11,6 +12,7 @@ interface IProps {
   icon?: string | null;
   iconClass?: string | null;
   iconHandler: (param: string) => void;
+  styles?: any;
 }
 
 const Input = (props: IProps) => {
@@ -24,6 +26,7 @@ const Input = (props: IProps) => {
     icon = null,
     iconClass = null,
     iconHandler = () => {},
+    styles = null,
   } = props;
 
   const [model, setModel] = useState("");
@@ -48,6 +51,7 @@ const Input = (props: IProps) => {
         placeholder={placeholder}
         onKeyUp={handleKeyDown}
         onChange={({ target: { value } }) => handler(value)}
+        style={styles}
       />
       {icon && icon !== "" && (
         <Icon

@@ -56,7 +56,10 @@ const Modal = (props: IProps) => {
         }`}
       >
         <div className="w-full flex justify-center items-center">
-          <div className="bg-white p-4 flex flex-col gap-2 rounded-lg">
+          <div
+            className="bg-white p-4 flex flex-col gap-2 rounded-lg"
+            style={{ border: "1px solid #d1d5db" }}
+          >
             <div className="w-full flex justify-end">
               <Icon
                 icon="fontisto:close"

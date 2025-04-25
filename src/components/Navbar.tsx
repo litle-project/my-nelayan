@@ -89,6 +89,7 @@ const Navbar = (props: IProps) => {
             <button
               className="bg-white cursor-pointer hover:bg-gray-100 text-gray-600 text-sm px-3 py-1 rounded-lg shadow-xl"
               onClick={() => logout()}
+              style={{ color: "#4B5563" }}
             >
               Logout
             </button>
