@@ -122,6 +122,14 @@ const Modal = (props: IProps) => {
                   style={{ width: "100%", height: "auto" }}
                 />
               </div>
+              <div className="flex w-full justify-end">
+                <button
+                  className="bg-black rounded-md px-2 py-1 text-white"
+                  onClick={() => window.print()}
+                >
+                  Print Kartu
+                </button>
+              </div>
             </div>
           </div>
         </div>
