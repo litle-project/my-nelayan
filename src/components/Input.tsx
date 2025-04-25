@@ -1,31 +1,38 @@
-import React from "react"
-import { Icon } from "@iconify/react"
+import React, { useState } from "react";
+import { Icon } from "@iconify/react";
 
 interface IProps {
-  type?: string,
-  error?: string,
-  placeholder?: string,
-  handler: (param: string) => void,
-  eventKey?: (param: string) => void,
-  classes?: string,
-  icon?: string | null
+  type?: string;
+  error?: string;
+  placeholder?: string;
+  handler: (param: string) => void;
+  eventKey?: (param: string) => void;
+  classes?: string;
+  icon?: string | null;
+  iconClass?: string | null;
+  iconHandler: (param: string) => void;
 }
 
 const Input = (props: IProps) => {
   const {
-    type = 'text',
+    type = "text",
     handler,
-    error = '',
+    error = "",
     eventKey = () => {},
-    classes = '',
-    placeholder = 'Input here',
+    classes = "",
+    placeholder = "Input here",
     icon = null,
-  } = props
+    iconClass = null,
+    iconHandler = () => {},
+  } = props;
+
+  const [model, setModel] = useState("");
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const inputValue = (event.target as HTMLInputElement).value;
+    setModel(inputValue);
     if (event.key === "Enter") {
-      eventKey(inputValue)
+      eventKey(inputValue);
     }
   };
 
@@ -36,18 +43,22 @@ const Input = (props: IProps) => {
         className={`
           ${classes} w-full px-4 h-14 bg-gray-50 border 
           placeholder-gray-700 text-sm text-gray-800
-          focus:outline-1 ${error !== '' ? 'border-red-500' : 'border-gray-300'}
+          focus:outline-1 ${error !== "" ? "border-red-500" : "border-gray-300"}
         `}
         placeholder={placeholder}
         onKeyUp={handleKeyDown}
         onChange={({ target: { value } }) => handler(value)}
       />
-      {icon && icon !== '' && (
-        <Icon icon={icon} className="absolute right-4 top-4.5 text-xl text-gray-800" />
+      {icon && icon !== "" && (
+        <Icon
+          icon={icon}
+          onClick={() => iconHandler(model)}
+          className={`absolute right-4 top-4.5 text-xl text-gray-800 ${iconClass}`}
+        />
       )}
-      {error !== '' && <span className="text-xs text-red-500">{error}</span>}
+      {error !== "" && <span className="text-xs text-red-500">{error}</span>}
     </div>
-  )
-}
+  );
+};
 
-export default Input
+export default Input;

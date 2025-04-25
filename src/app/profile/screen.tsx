@@ -20,12 +20,13 @@ const Page = () => {
 
   const searchParams = useSearchParams();
   const slug = searchParams.get("identity");
+  const name = searchParams.get("name");
   const router = useRouter();
 
   const [qrCode, setQrCode] = useState("");
   const [certified, setCertified] = useState("/images/certified.png");
   const [data, setData] = useState<IUser>({
-    name: "Ilham",
+    name: "",
     identity: "",
     logo:
       envMode === "production"
@@ -33,13 +34,16 @@ const Page = () => {
         : "/images/hnsi.png",
   });
 
-  const generateCode = (code: string) => {
+  const generateCode = (code: string, name: string) => {
     setData((prev) => ({
       ...prev,
+      name,
       identity: code || "",
     }));
 
-    QRCode.toDataURL(`${baseURL}/profile?identity=${code || ""}`)
+    QRCode.toDataURL(
+      `${baseURL}/profile?identity=${code || ""}&name=${name || ""}`
+    )
       .then((url: string) => setQrCode(url))
       .catch((err: unknown) => console.error(err));
   };
@@ -47,7 +51,7 @@ const Page = () => {
   useEffect(() => {
     if (envMode === "production")
       setCertified(`${basePath}/images/certified.png`);
-    if (slug) generateCode(slug);
+    if (slug && name) generateCode(slug, name);
     if (!slug) router.back();
   }, [envMode, slug]);
 

@@ -27,6 +27,7 @@ const Page = () => {
 
   const router = useRouter();
   const { isMobile } = ScreenDetector();
+  const [loading, setLoading] = useState(false);
   const [qrCode, setQrCode] = useState("");
   const [firstRender, setFirstRender] = useState(false);
   const [user, setUser] = useState<IUser | null>(null);
@@ -35,13 +36,14 @@ const Page = () => {
     content: "",
   });
 
-  const generateCode = (identity: string) => {
-    QRCode.toDataURL(`${baseURL}/profile?identity=${identity}`)
+  const generateCode = (identity: string, name: string) => {
+    QRCode.toDataURL(`${baseURL}/profile?identity=${identity}&name=${name}`)
       .then((url: string) => setQrCode(url))
       .catch((err: unknown) => console.error(err));
   };
 
   const findUser = async (keyword = "") => {
+    setLoading(!loading);
     const cookie = localStorage.getItem("cookies");
     const response = await fetch(`/api/user?nik=${keyword}&cookie=${cookie}`, {
       method: "GET",
@@ -50,7 +52,7 @@ const Page = () => {
 
     if (data?.data) {
       const { identity, name, join_date } = data.data;
-      generateCode(identity);
+      generateCode(identity, name);
       setUser({
         identity,
         name,
@@ -64,6 +66,7 @@ const Page = () => {
       setUser(null);
     }
 
+    setLoading(false);
     if (!firstRender) setFirstRender(true);
   };
 
@@ -94,7 +97,9 @@ const Page = () => {
               handler={() => {}}
               placeholder="Cari berdasarkan NIK..."
               classes="rounded-full shadow-md [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-              icon="material-symbols:search"
+              icon={!loading ? "material-symbols:search" : "tdesign:loading"}
+              iconClass={loading ? "animate-spin" : "cursor-pointer"}
+              iconHandler={(param: string) => findUser(param)}
             />
           </div>
           <div className="xl:px-32 px-5 mt-20">
@@ -139,7 +144,9 @@ const Page = () => {
             handler={() => {}}
             placeholder="Cari berdasarkan NIK..."
             classes="rounded-xl [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none "
-            icon="material-symbols:search"
+            icon={!loading ? "material-symbols:search" : "tdesign:loading"}
+            iconClass={loading ? "animate-spin" : "cursor-pointer"}
+            iconHandler={(param: string) => findUser(param)}
           />
           <div className="flex flex-col gap-5">
             {!firstRender ? (
