@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import React, { useState, useEffect } from "react";
+import Cookies from "js-cookie";
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/navigation";
 import ScreenDetector from "@/utilities/screen-detector";
@@ -30,14 +31,15 @@ const Navbar = (props: IProps) => {
   }, [envMode]);
 
   const logout = () => {
-    localStorage.removeItem("cookies");
-    localStorage.removeItem("email");
+    Cookies.remove("cookies");
+    Cookies.remove("email");
+    Cookies.remove("name");
     router.push("/");
   };
 
   useEffect(() => {
-    const name = localStorage.getItem("name");
-    const email = localStorage.getItem("email");
+    const name = Cookies.get("name");
+    const email = Cookies.get("email");
 
     if (name && name !== "" && email && email !== "")
       setAccount({ email, name });

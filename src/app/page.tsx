@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
@@ -49,8 +50,10 @@ const Page = () => {
     const data = await response.json();
 
     if (data?.result) {
-      localStorage.setItem("email", data.result.username);
-      localStorage.setItem("cookies", data.result.cookies);
+      Cookies.set("email", data.result.username);
+      Cookies.set("name", data.result.name);
+      Cookies.set("cookies", data.result.cookies);
+
       router.push("/dashboard");
     } else {
       dispatch(setMessage("Email atau kata sandi salah. Silakan coba lagi."));
@@ -79,8 +82,12 @@ const Page = () => {
                   <div className="relative">
                     <input
                       type="text"
-                      className="rounded-full border-2 border-gray-400 w-full py-2 px-4"
+                      className="rounded-full border-2 border-gray-400 w-full py-2 px-4 focus:outline-none"
                       placeholder="Email"
+                      style={{ border: "2px solid #9ca3af" }}
+                      onChange={({ target: { value } }) =>
+                        setForm({ ...form, email: value })
+                      }
                     />
                     <Icon
                       icon="iconamoon:email-bold"
@@ -89,14 +96,38 @@ const Page = () => {
                   </div>
                   <div className="relative">
                     <input
-                      type="password"
-                      className="rounded-full border-2 border-gray-400 w-full py-2 px-4"
+                      type={showPassword ? "text" : "password"}
+                      className="rounded-full border-2 border-gray-400 w-full py-2 px-4 focus:outline-none"
                       placeholder="Password"
+                      style={{ border: "2px solid #9ca3af" }}
+                      onChange={({ target: { value } }) =>
+                        setForm({ ...form, password: value })
+                      }
                     />
-                    <Icon
-                      icon="material-symbols:lock-outline"
-                      className="absolute right-4 top-3 text-xl text-gray-500"
-                    />
+                    <button
+                      className="absolute right-4 top-3 text-xl"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {!showPassword ? (
+                        <Icon
+                          icon="basil:eye-closed-outline"
+                          className={`text-xl group-focus-within:text-[#2a4ea2] ${
+                            form.password !== ""
+                              ? "text-[#2a4ea2]"
+                              : "text-gray-500"
+                          }`}
+                        />
+                      ) : (
+                        <Icon
+                          icon="iconamoon:eye-light"
+                          className={`text-xl group-focus-within:text-[#2a4ea2] ${
+                            form.password !== ""
+                              ? "text-[#2a4ea2]"
+                              : "text-gray-500"
+                          }`}
+                        />
+                      )}
+                    </button>
                   </div>
                 </div>
                 <Button

@@ -1,5 +1,6 @@
 "use client";
 
+import Cookies from "js-cookie";
 import Empty from "@/components/Empty";
 import Input from "@/components/Input";
 import Navbar from "@/components/Navbar";
@@ -44,7 +45,7 @@ const Page = () => {
 
   const findUser = async (keyword = "") => {
     setLoading(!loading);
-    const cookie = localStorage.getItem("cookies");
+    const cookie = Cookies.get("cookies");
     const response = await fetch(`/api/user?nik=${keyword}&cookie=${cookie}`, {
       method: "GET",
     });
@@ -71,7 +72,7 @@ const Page = () => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("cookies");
+    const token = Cookies.get("cookies");
     if (!token) router.push("/");
   }, []);
 
