@@ -163,11 +163,7 @@ const Page = () => {
             {!firstRender ? (
               <Default />
             ) : user ? (
-              <div
-                role="button"
-                onClick={() => setModal({ status: true, content: "id-card" })}
-                className="p-4 bg-[#2a4ea2] rounded-xl flex justify-between"
-              >
+              <div className="p-4 bg-[#2a4ea2] rounded-xl flex justify-between">
                 <Image
                   src={qrCode}
                   alt="QR Code"
@@ -176,23 +172,31 @@ const Page = () => {
                   className="w-24 h-auto"
                 />
                 <div className="w-px h-24 bg-white"></div>
-                <div className="grid grid-cols-4 text-white gap-5 items-center w-[80%]">
+                <div className="grid grid-cols-5 text-white gap-5 items-center w-[90%]">
                   <div className="flex flex-col text-center">
                     <span>Nama</span>
-                    <span className="text-2xl font-bold">{user?.name}</span>
+                    <span className="text-xl font-bold">{user?.name}</span>
                   </div>
                   <div className="flex flex-col text-center">
                     <span>No Registrasi</span>
-                    <span className="text-2xl font-bold">{user?.identity}</span>
+                    <span className="text-xl font-bold">{user?.identity}</span>
                   </div>
                   <div className="flex flex-col text-center">
                     <span>Tanggal Bergabung</span>
-                    <span className="text-2xl font-bold">{user?.date}</span>
+                    <span className="text-xl font-bold">{user?.date}</span>
                   </div>
                   <div className="flex flex-col text-center">
                     <span>Verified Member</span>
-                    <span className="text-2xl font-bold">Verified</span>
+                    <span className="text-xl font-bold">Verified</span>
                   </div>
+                  <button
+                    onClick={() =>
+                      setModal({ status: true, content: "id-card" })
+                    }
+                    className="text-white pl-4 border-l border-white h-24 flex items-center hover:underline cursor-pointer"
+                  >
+                    Tampilkan Kartu
+                  </button>
                 </div>
               </div>
             ) : (
