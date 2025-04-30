@@ -172,7 +172,7 @@ const Page = () => {
                   className="w-24 h-auto"
                 />
                 <div className="w-px h-24 bg-white"></div>
-                <div className="grid grid-cols-5 text-white gap-5 items-center w-[90%]">
+                <div className="grid grid-cols-5 text-white gap-5 items-center w-[80%]">
                   <div className="flex flex-col text-center">
                     <span>Nama</span>
                     <span className="text-xl font-bold">{user?.name}</span>

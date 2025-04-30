@@ -82,7 +82,7 @@ const Page = () => {
                   <div className="relative">
                     <input
                       type="text"
-                      className="rounded-full border-2 border-gray-400 w-full py-2 px-4 focus:outline-none"
+                      className="rounded-full border-2 border-gray-400 w-full py-2 px-4 focus:outline-none text-gray-500"
                       placeholder="Email"
                       style={{ border: "2px solid #9ca3af" }}
                       onChange={({ target: { value } }) =>
@@ -97,7 +97,7 @@ const Page = () => {
                   <div className="relative">
                     <input
                       type={showPassword ? "text" : "password"}
-                      className="rounded-full border-2 border-gray-400 w-full py-2 px-4 focus:outline-none"
+                      className="rounded-full border-2 border-gray-400 w-full py-2 px-4 focus:outline-none text-gray-500"
                       placeholder="Password"
                       style={{ border: "2px solid #9ca3af" }}
                       onChange={({ target: { value } }) =>
