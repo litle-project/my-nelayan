@@ -49,8 +49,10 @@ const Page = () => {
 
     const data = await response.json();
 
+    console.log(data.result);
+
     if (data?.result) {
-      Cookies.set("email", data.result.username);
+      Cookies.set("email", data.result.email);
       Cookies.set("name", data.result.name);
       Cookies.set("cookies", data.result.cookies);
 

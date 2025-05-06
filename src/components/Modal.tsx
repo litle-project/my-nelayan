@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import Image from "next/image";
 import { Icon } from "@iconify/react";
 import QRCode from "qrcode";
 import { useState, useEffect } from "react";
+import Print from "./Print";
+import ReactDOM from "react-dom/client";
 
 interface IProps {
   close: () => void;
@@ -25,7 +28,11 @@ const Modal = (props: IProps) => {
   const envMode = process.env.NEXT_PUBLIC_NODE_ENV;
 
   const generateCode = () => {
-    QRCode.toDataURL(`${baseURL}/profile?identity=${data?.identity || ""}`)
+    QRCode.toDataURL(
+      `${baseURL}/profile?identity=${data?.identity || ""}&name=${
+        data?.name || ""
+      }`
+    )
       .then((url: string) => setQrCode(url))
       .catch((err: unknown) => console.error(err));
   };
@@ -36,12 +43,49 @@ const Modal = (props: IProps) => {
       setCertified(`${basePath}/images/certified.png`);
   }, [status, envMode]);
 
-  useEffect(
-    () => () => {
-      setQrCode("");
-    },
-    []
-  );
+  useEffect(() => () => setQrCode(""), []);
+
+  const openPrintWindow = (data: any, qrCode: string, certified: string) => {
+    const printWindow = window.open("", "_blank", "width=800,height=600");
+    if (!printWindow) return;
+
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Kartu</title>
+          <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+          <style>
+            @media print {
+              * {
+                -webkit-print-color-adjust: exact !important;
+                color-adjust: exact !important;
+              }
+            }
+          </style>
+        </head>
+        <body>
+          <div id="print-root"></div>
+          <script>
+            window.onafterprint = () => window.close();
+          </script>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+
+    const interval = setInterval(() => {
+      const mountNode = printWindow.document.getElementById("print-root");
+      if (mountNode) {
+        clearInterval(interval);
+        const root = ReactDOM.createRoot(mountNode);
+        root.render(
+          <Print data={data} qrCode={qrCode} certified={certified} />
+        );
+        printWindow.focus();
+        setTimeout(() => printWindow.print(), 500); // delay ensures render completes before print
+      }
+    }, 100);
+  };
 
   return (
     <>
@@ -91,13 +135,21 @@ const Modal = (props: IProps) => {
                 </div>
                 <div className="bg-white flex justify-between py-8 px-4">
                   <div className="flex flex-col gap-2">
-                    <div className="flex gap-2">
-                      <span className="font-bold">Nama:</span>
-                      <span>{data?.name}</span>
+                    <div className="flex md:flex-row flex-col md:gap-2 gap-1">
+                      <span className="font-bold md:text-base text-sm text-black">
+                        Nama:
+                      </span>
+                      <span className="md:text-base text-sm text-black">
+                        {data?.name}
+                      </span>
                     </div>
-                    <div className="flex gap-2">
-                      <span className="font-bold">Nomor Anggota:</span>
-                      <span>{data?.identity}</span>
+                    <div className="flex md:flex-row flex-col md:gap-2 gap-1">
+                      <span className="font-bold md:text-base text-sm text-black">
+                        Nomor Anggota:
+                      </span>
+                      <span className="md:text-base text-sm text-black">
+                        {data?.identity}
+                      </span>
                     </div>
                   </div>
                   <div className="flex flex-col gap-1 items-center">
@@ -112,7 +164,9 @@ const Modal = (props: IProps) => {
                         />
                       )}
                     </div>
-                    <span className="font-bold">{data?.identity}</span>
+                    <span className="font-bold md:text-base text-sm text-black">
+                      {data?.identity}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -128,7 +182,7 @@ const Modal = (props: IProps) => {
               <div className="flex w-full justify-end">
                 <button
                   className="bg-black rounded-md px-2 py-1 text-white"
-                  onClick={() => window.print()}
+                  onClick={() => openPrintWindow(data, qrCode, certified)}
                 >
                   Print Kartu
                 </button>

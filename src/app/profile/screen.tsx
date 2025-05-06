@@ -92,13 +92,21 @@ const Page = () => {
                 </div>
                 <div className="bg-white flex justify-between py-8 px-4">
                   <div className="flex flex-col gap-2">
-                    <div className="flex gap-2">
-                      <span className="font-bold">Nama:</span>
-                      <span>{data?.name}</span>
+                    <div className="flex md:flex-row flex-col md:gap-2 gap-1">
+                      <span className="font-bold md:text-base text-sm text-black">
+                        Nama:
+                      </span>
+                      <span className="md:text-base text-sm text-black">
+                        {data?.name}
+                      </span>
                     </div>
-                    <div className="flex gap-2">
-                      <span className="font-bold">Nomor Anggota:</span>
-                      <span>{data?.identity}</span>
+                    <div className="flex md:flex-row flex-col md:gap-2 gap-1">
+                      <span className="font-bold md:text-base text-sm text-black">
+                        Nomor Anggota:
+                      </span>
+                      <span className="md:text-base text-sm text-black">
+                        {data?.identity}
+                      </span>
                     </div>
                   </div>
                   <div className="flex flex-col gap-1 items-center">
@@ -113,7 +121,9 @@ const Page = () => {
                         />
                       )}
                     </div>
-                    <span className="font-bold">{data?.identity}</span>
+                    <span className="font-bold md:text-base text-sm text-black">
+                      {data?.identity}
+                    </span>
                   </div>
                 </div>
               </div>

@@ -29,7 +29,8 @@ export async function POST(req: Request) {
     return NextResponse.json({
       result: {
         cookies: data[0],
-        email: body.email,
+        email: res.result.username,
+        name: res.result.name,
       },
     });
   } catch (error) {
